@@ -1,0 +1,61 @@
+/* =========================================================
+   base.css
+   - 폰트, 전역 변수, 공통 레이아웃 스타일
+   - 기존 main.css에서 분리했습니다.
+   ========================================================= */
+
+/* Font: 포트폴리오 기본 한글 폰트 */
+@font-face {
+  font-family: "NEXON Lv1 Gothic";
+  src: url("../asset/font/NEXONLv1GothicRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* Global Variables: 전체 색상, 레이아웃, 타이포그래피 기준값 */
+:root {
+  /* Color */
+  --color-main-bg: #668aff;
+  --color-white: #ffffff;
+
+  /* Layout - 기존 비율 유지 */
+  --inner-width: min(100% - 104px, 1440px);
+  --hero-viewport-height: 100vh;
+  --hero-scroll-height: 260vh;
+
+  /* Hero Position - 시안 기준 위치값 */
+  --hero-header-top: 64px;
+  --hero-character-top: 42vh;
+  --hero-character-size: clamp(420px, 14vw, 600px);
+  --hero-scroll-bottom: 72px;
+
+  /* Font */
+  --font-main: "NEXON Lv1 Gothic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-hero-header: 22px;
+  --text-scroll: 13px;
+  --text-message: clamp(18px, 2.2vw, 28px);
+  --text-section-title: 32px;
+}
+
+
+/* Common Layout: 모든 섹션에서 공통으로 사용하는 inner 폭 */
+.inner {
+  width: var(--inner-width);
+  margin: 0 auto;
+}
+
+
+/* Common Section: 기본 섹션 높이와 배경 */
+.section {
+  min-height: 100vh;
+  padding: 120px 0;
+  background: var(--color-main-bg);
+}
+
+.section__eyebrow {
+  font-size: var(--text-section-title);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}

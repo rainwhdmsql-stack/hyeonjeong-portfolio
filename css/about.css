@@ -1,0 +1,542 @@
+/* =========================================================
+   about.css
+   - mainpage.css에서 분리한 섹션별 스타일 파일입니다.
+   - 원본 라인 범위: 1464-1993
+   ========================================================= */
+
+/* =========================================================
+   About: Piece by Piece + Letter Contact
+   - 슬라이딩 퍼즐, Tool Sticker, Letter형 Contact 영역
+   ========================================================= */
+.section--about {
+  position: relative;
+  overflow: hidden;
+  min-height: 120vh;
+  padding: 132px 0 110px;
+  background: #f4f6ff;
+  color: #17245f;
+}
+
+.about__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(36px, 5vw, 82px);
+  align-items: start;
+}
+
+.about__intro {
+  position: sticky;
+  top: 120px;
+}
+
+.about__eyebrow {
+  color: rgba(23, 36, 95, 0.72);
+}
+
+.about__title {
+  margin: 18px 0 0;
+  font-size: clamp(54px, 7vw, 118px);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.about__copy {
+  margin: 34px 0 0;
+  color: rgba(23, 36, 95, 0.86);
+  font-size: clamp(20px, 2.2vw, 32px);
+  line-height: 1.42;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+
+.about-playground {
+  position: relative;
+  min-height: 860px;
+  padding: 54px 0 180px;
+}
+
+.puzzle-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(148px, 1fr));
+  grid-auto-rows: minmax(148px, 1fr);
+  gap: 8px;
+  width: min(100%, 650px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.puzzle-cell {
+  border: 1px solid rgba(23, 36, 95, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.puzzle-piece,
+.puzzle-description {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc((100% - 16px) / 3);
+  height: calc((100% - 16px) / 3);
+  padding: clamp(16px, 2vw, 24px);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: none;
+  color: #17245f;
+  text-align: left;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease, filter 0.24s ease;
+}
+
+.puzzle-piece {
+  cursor: pointer;
+}
+
+.puzzle-piece--yellow,
+.puzzle-description--yellow {
+  background: #fff188;
+}
+
+.puzzle-piece--pink,
+.puzzle-description--pink {
+  background: #fd87ff;
+}
+
+.puzzle-piece:hover {
+  filter: saturate(1.03) brightness(1.01);
+}
+
+.puzzle-piece.is-active {
+  z-index: 5;
+}
+
+.puzzle-piece.is-muted {
+  opacity: 0.82;
+}
+
+.puzzle-piece.is-locked {
+  animation: puzzle-shake 0.28s ease;
+}
+
+@keyframes puzzle-shake {
+  0%, 100% { margin-left: 0; }
+  25% { margin-left: -5px; }
+  75% { margin-left: 5px; }
+}
+
+.puzzle-piece__icon {
+  display: block;
+  width: clamp(100px, 6.2vw, 140px);
+  height: clamp(100px, 6.2vw, 140px);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.puzzle-piece__label {
+  font-size: clamp(18px, 1.55vw, 24px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.puzzle-description {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.puzzle-description[hidden] {
+  display: none;
+}
+
+.puzzle-description__title {
+  margin: 0;
+  font-size: clamp(17px, 1.4vw, 22px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.puzzle-description__text {
+  margin: 0;
+  font-size: clamp(14px, 1vw, 17px);
+  line-height: 1.46;
+  word-break: keep-all;
+}
+
+.tool-sticker-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.tool-sticker {
+  position: absolute;
+  width: clamp(95px, 10vw, 130px);
+  height: auto;
+  cursor: grab;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.tool-sticker:hover {
+  transform: scale(1.04) rotate(var(--sticker-rotate, 0deg));
+}
+
+.tool-sticker.is-dragging {
+  z-index: 20;
+  cursor: grabbing;
+  filter: brightness(1.03);
+  transition: none;
+}
+
+.tool-sticker:nth-child(1) { left: 4%; top: 6%; --sticker-rotate: -4deg; transform: rotate(-4deg); }
+.tool-sticker:nth-child(2) { right: 2%; top: 14%; --sticker-rotate: 5deg; transform: rotate(5deg); }
+.tool-sticker:nth-child(3) { left: 7%; top: 64%; --sticker-rotate: 6deg; transform: rotate(6deg); }
+.tool-sticker:nth-child(4) { right: 2%; top: 63%; --sticker-rotate: -5deg; transform: rotate(-5deg); }
+.tool-sticker:nth-child(5) { left: 32%; top: 2%; --sticker-rotate: 3deg; transform: rotate(3deg); }
+.tool-sticker:nth-child(6) { left: 54%; top: 75%; --sticker-rotate: 6deg; transform: rotate(4deg); }
+.tool-sticker:nth-child(7) { right: 1%; top: 82%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+.tool-sticker:nth-child(8) { left: 7%; top: 82%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+.tool-sticker:nth-child(9) { right: 80%; top: 30%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+.tool-sticker:nth-child(10) { left: 57%; top: 8%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+.tool-sticker:nth-child(11) { right: 1%; top: 62%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+.tool-sticker:nth-child(12) { right: 1%; top: 82%; --sticker-rotate: -3deg; transform: rotate(-3deg); }
+
+.section--contact {
+  min-height: auto;
+  padding: 98px 0 126px;
+  background: #f4f6ff;
+  color: #17245f;
+}
+
+.contact__inner {
+  display: flex;
+  justify-content: center;
+}
+
+.letter-card {
+  position: relative;
+  width: min(100%, 840px);
+  padding: clamp(34px, 5vw, 64px);
+  border: 1px solid rgba(23, 36, 95, 0.18);
+  border-radius: 18px;
+  background: #fffdf6;
+  color: #17245f;
+}
+
+.letter-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 18px;
+  border-radius: 18px 18px 0 0;
+  background: repeating-linear-gradient(135deg, #fff188 0 28px, #fd87ff 28px 56px);
+}
+
+.letter-card__eyebrow {
+  margin: 0 0 22px;
+  color: rgba(23, 36, 95, 0.58);
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.letter-card h2 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.letter-card p:not(.letter-card__eyebrow) {
+  margin: 26px 0 0;
+  color: rgba(23, 36, 95, 0.78);
+  font-size: clamp(17px, 1.35vw, 22px);
+  line-height: 1.62;
+  word-break: keep-all;
+}
+
+.letter-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.letter-card__links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid rgba(23, 36, 95, 0.22);
+  border-radius: 999px;
+  color: #17245f;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.22s ease, background 0.22s ease;
+}
+
+.letter-card__links a:hover {
+  transform: translateY(-2px);
+  background: rgba(102, 138, 255, 0.12);
+}
+
+/* About Responsive: 태블릿 이하에서 About을 1열로 전환 */
+@media (max-width: 960px) {
+  .about__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .about__intro {
+    position: static;
+  }
+
+  .about-playground {
+    min-height: 760px;
+    padding-top: 24px;
+  }
+}
+
+/* About Responsive: 모바일 퍼즐 크기와 스티커 크기 조정 */
+@media (max-width: 640px) {
+  .section--about {
+    padding: 100px 0 72px;
+  }
+
+  .puzzle-board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(96px, 1fr);
+    gap: 6px;
+  }
+
+  .puzzle-piece,
+  .puzzle-description {
+    width: calc((100% - 12px) / 3);
+    height: calc((100% - 12px) / 3);
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .puzzle-piece__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .puzzle-description__text {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .tool-sticker {
+    width: 76px;
+  }
+}
+
+/* =========================================================
+   About Refinements
+   - 흰 배경, 헤더 색상, 설명 조각 연결부 스타일
+   ========================================================= */
+.hero__header[data-mode="about"] .hero__brand,
+.hero__header[data-mode="about"] .hero__category,
+.hero__header[data-mode="contact"] .hero__brand,
+.hero__header[data-mode="contact"] .hero__category {
+  color: rgba(23, 36, 95, 0.82);
+}
+
+.section--about,
+.section--contact {
+  background: #ffffff;
+}
+
+.puzzle-description {
+  overflow: visible;
+}
+
+.puzzle-description::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: inherit;
+  pointer-events: none;
+}
+
+.puzzle-description.is-link-right::after,
+.puzzle-description.is-link-left::after {
+  top: 0;
+  width: 8px;
+  height: 100%;
+}
+
+.puzzle-description.is-link-right::after {
+  right: -8px;
+}
+
+.puzzle-description.is-link-left::after {
+  left: -8px;
+}
+
+.puzzle-description.is-link-up::after,
+.puzzle-description.is-link-down::after {
+  left: 0;
+  width: 100%;
+  height: 8px;
+}
+
+.puzzle-description.is-link-up::after {
+  top: -8px;
+}
+
+.puzzle-description.is-link-down::after {
+  bottom: -8px;
+}
+
+.puzzle-description.is-link-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.puzzle-piece.is-linked-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.puzzle-description.is-link-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.puzzle-piece.is-linked-left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.puzzle-description.is-link-up {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.puzzle-piece.is-linked-up {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.puzzle-description.is-link-down {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.puzzle-piece.is-linked-down {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* =========================================================
+   v1.3 Fix: About header / background / connected description slide
+   - About과 Letter 섹션 배경을 흰색으로 고정합니다.
+   - 설명 조각이 선택한 퍼즐 조각에서 인접 빈칸으로 슬라이드되는 연결감을 보정합니다.
+   ========================================================= */
+.section--about,
+.section--contact {
+  background: #ffffff;
+}
+
+.puzzle-description {
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
+}
+
+.puzzle-description.is-entering {
+  opacity: 0.96;
+}
+
+.puzzle-piece.is-active {
+  z-index: 6;
+}
+
+/* 설명 조각이 선택 조각의 오른쪽에 열릴 때: 서로 맞닿는 면을 평평하게 처리 */
+.puzzle-description.is-link-right::after {
+  left: -8px;
+  right: auto;
+}
+.puzzle-description.is-link-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.puzzle-piece.is-linked-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* 설명 조각이 선택 조각의 왼쪽에 열릴 때 */
+.puzzle-description.is-link-left::after {
+  right: -8px;
+  left: auto;
+}
+.puzzle-description.is-link-left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.puzzle-piece.is-linked-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* 설명 조각이 선택 조각의 위쪽에 열릴 때 */
+.puzzle-description.is-link-up::after {
+  bottom: -8px;
+  top: auto;
+}
+.puzzle-description.is-link-up {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.puzzle-piece.is-linked-up {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* 설명 조각이 선택 조각의 아래쪽에 열릴 때 */
+.puzzle-description.is-link-down::after {
+  top: -8px;
+  bottom: auto;
+}
+.puzzle-description.is-link-down {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.puzzle-piece.is-linked-down {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}

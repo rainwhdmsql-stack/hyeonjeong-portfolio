@@ -53,7 +53,6 @@
       name="twitter:description"
       content="UX/UI Design · Web Publishing · Design Works"
     />
-
     <meta
       name="twitter:image"
       content="https://hyeonjeong-portfolio.vercel.app/asset/portfolio-thumbnail.png"
@@ -80,11 +79,14 @@
   </head>
   <body>
     <main id="page">
-      <header class="hero__header" aria-label="포트폴리오 상단 정보">
+      <!-- Header: 현재 섹션 정보를 보여주는 고정 상단 텍스트 -->
+      <header class="hero__header" data-mode="hero" aria-label="포트폴리오 상단 정보">
         <p
           class="hero__brand"
           data-hero-text="Hyeon Jeong | PORTFOLIO"
-          data-project-text="Hyeon Jeong | PROJECTS"
+          data-project-text="PORTFOLIO"
+          data-about-text="PORTFOLIO"
+          data-contact-text="PORTFOLIO"
         >
           Hyeon Jeong | PORTFOLIO
         </p>
@@ -92,11 +94,14 @@
           class="hero__category"
           data-hero-text="UX/UI DESIGN"
           data-project-text="SELECTED WORK"
+          data-about-text="ABOUT"
+          data-contact-text="CONTACT"
         >
           UX/UI DESIGN
         </p>
       </header>
 
+      <!-- Hero + Projects wrapper: 인트로와 프로젝트 슬라이드를 하나의 흐름으로 연결 -->
       <div class="hero-project" aria-label="히어로와 프로젝트 연결 영역">
         <div class="hero__bg" aria-hidden="true">
           <img
@@ -111,6 +116,7 @@
           />
         </div>
 
+        <!-- Hero Section: 첫 진입 인사와 스크롤 안내 -->
         <section class="hero" aria-label="포트폴리오 인트로">
           <div class="hero__viewport">
             <div class="inner hero__inner">
@@ -143,6 +149,7 @@
           </div>
         </section>
 
+        <!-- Projects Section: 카테고리 슬라이드 -->
         <section class="project" id="projects" aria-label="프로젝트 영역">
           <div class="inner project__inner">
             <div class="project__intro">
@@ -168,6 +175,7 @@
           </div>
         </section>
       </div>
+      <!-- Project Detail Section: JS가 선택한 카테고리별 상세 뷰어를 렌더링 -->
       <section
         class="project-detail project-detail--dynamic"
         id="project-detail"
@@ -185,11 +193,100 @@
           <div id="projectDetailMount"></div>
         </div>
       </section>
-      <section class="section section--about" id="about">
-        <div class="inner"><p class="section__eyebrow">ABOUT</p></div>
+      <!-- About Section: Piece by Piece 슬라이딩 퍼즐 인터랙션 -->
+      <section class="section section--about" id="about" aria-label="About Piece by Piece">
+        <div class="inner about__inner">
+          <div class="about__intro">
+            <!-- <p class="section__eyebrow about__eyebrow">ABOUT</p> -->
+            <h2 class="about__title">Piece by Piece</h2>
+            <p class="about__copy">
+              클릭하고,<br />
+              움직여보세요.<br /><br />
+              하나씩,<br />
+              조각을 맞춰보세요.
+            </p>
+          </div>
+
+          <!-- About Playground: 퍼즐 조각과 드래그 가능한 Tool Sticker 영역 -->
+          <div class="about-playground" id="aboutPlayground" aria-label="작업 방식 퍼즐과 툴 스티커">
+            <!-- Sliding Puzzle: 오브젝트 클릭 시 빈칸으로 이동하고 설명 조각 표시 -->
+            <div class="puzzle-board" id="puzzleBoard" aria-label="작업 방식 슬라이딩 퍼즐">
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+              <div class="puzzle-cell" aria-hidden="true"></div>
+
+              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="why" aria-label="Why 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Why_.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Why?</span>
+              </button>
+              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="simplify" aria-label="Simplify 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Simplify.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Simplify</span>
+              </button>
+              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="perspective" aria-label="Perspective 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Perspective.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Perspective</span>
+              </button>
+              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="handsOn" aria-label="Hands-on 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Hands-on.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Hands-on</span>
+              </button>
+              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="refine" aria-label="Refine 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Refine.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Refine</span>
+              </button>
+              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="details" aria-label="Details 설명 열기">
+                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Details.png" alt="" aria-hidden="true" />
+                <span class="puzzle-piece__label">Details</span>
+              </button>
+
+              <article class="puzzle-description" id="puzzleDescription" aria-live="polite" hidden>
+                <p class="puzzle-description__title"></p>
+                <p class="puzzle-description__text"></p>
+              </article>
+            </div>
+
+            <!-- Tool Sticker Layer: asset/tool-sticker 이미지 기반 드래그 스티커 -->
+            <div class="tool-sticker-layer" id="toolStickerLayer" aria-label="드래그 가능한 툴 스티커">
+              <img class="tool-sticker" src="asset/tool-sticker/figma.png" alt="Figma" data-tool="Figma" />
+              <img class="tool-sticker" src="asset/tool-sticker/photoshop.png" alt="Photoshop" data-tool="Photoshop" />
+              <img class="tool-sticker" src="asset/tool-sticker/illustrator.png" alt="Illustrator" data-tool="Illustrator" />
+              <img class="tool-sticker" src="asset/tool-sticker/github.png" alt="github" data-tool="github" />
+              <img class="tool-sticker" src="asset/tool-sticker/notion.png" alt="notion" data-tool="notion" />
+              <img class="tool-sticker" src="asset/tool-sticker/slack.png" alt="slack" data-tool="slack" />
+              <img class="tool-sticker" src="asset/tool-sticker/vscode.png" alt="VSCode" data-tool="VSCode" />
+              <img class="tool-sticker" src="asset/tool-sticker/midjourney.png" alt="midjourney" data-tool="midjourney" />
+              <img class="tool-sticker" src="asset/tool-sticker/google-analytics.png" alt="Google Analytics" data-tool="GoogleAnalytics" />
+              <img class="tool-sticker" src="asset/tool-sticker/meta.png" alt="Meta" data-tool="Meta" />
+              <img class="tool-sticker" src="asset/tool-sticker/looker-studio.png" alt="Looker-studio" data-tool="Looker-studio" />
+            </div>
+          </div>
+        </div>
       </section>
-      <section class="section section--contact" id="contact">
-        <div class="inner"><p class="section__eyebrow">CONTACT</p></div>
+
+      <!-- Contact Section: Letter 형태의 마지막 연락 영역 -->
+      <section class="section section--contact" id="contact" aria-label="Contact Letter">
+        <div class="inner contact__inner">
+          <article class="letter-card" aria-label="contact-letter">
+            <p class="letter-card__eyebrow">LETTER</p>
+            <h2>여기까지 둘러봐주셔서 감사합니다.</h2>
+            <p>
+              제 작업과 생각이 궁금하셨다면,<br />
+              편하게 연락 주세요.
+            </p>
+            <div class="letter-card__links" aria-label="연락 링크">
+              <a href="mailto:example@email.com">Email</a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+              <a href="#" target="_blank" rel="noreferrer">Resume</a>
+            </div>
+          </article>
+        </div>
       </section>
     </main>
 
@@ -197,7 +294,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <!-- js 연결 -->
+    <!-- Project data: 프로젝트 정보/이미지/버튼 링크 데이터 -->
     <script src="js/projectData.js"></script>
-    <script src="js/main.js"></script>
+
+    <!-- JavaScript modules: 기능별로 분리해 편집하기 쉽게 구성 -->
+    <script src="js/core.js"></script>
+    <script src="js/projectViewers.js"></script>
+    <script src="js/projectSlider.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/aboutPuzzle.js"></script>
+    <script src="js/toolStickers.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

@@ -4,40 +4,86 @@ const messages = document.querySelectorAll('.hero__message');
 const header = document.querySelector('.hero__header');
 const headerBrand = document.querySelector('.hero__brand');
 const headerCategory = document.querySelector('.hero__category');
+const categoryCards = document.querySelector('#categoryCards');
+const detailSection = document.querySelector('#project-detail');
+const detailMount = document.querySelector('#projectDetailMount');
 
-const projectData = [
-  { id: 'process-app-design', title: 'APP DESIGN', image: 'asset/image/project/app_design.png' },
-  { id: 'process-bisang-clonecoding', title: 'BISANG', image: 'asset/image/project/bisang_clonecoding.png' },
-  { id: 'process-branding-design', title: 'BRANDING', image: 'asset/image/project/branding_design.png' },
-  { id: 'process-cafe24-design', title: 'CAFE24', image: 'asset/image/project/cafe24_design.png' },
-  { id: 'process-chimack-design', title: 'CHIMAC', image: 'asset/image/project/chimack_design.png' },
-  { id: 'process-detailpage-design', title: 'DETAIL PAGE', image: 'asset/image/project/detailpage_design.png' },
-  { id: 'process-roomlit-brandsite', title: 'ROOMLIT', image: 'asset/image/project/roomlit_brandsite.png' },
-  { id: 'process-sns-design', title: 'SNS DESIGN', image: 'asset/image/project/sns_design.jpg' },
-  { id: 'process-teamproject', title: 'TEAM PROJECT', image: 'asset/image/project/teamproject.png' }
-];
+let activeCategoryId = null;
+let activeProjectId = null;
+let currentHeaderMode = 'hero';
 
-
-let activeDetailId = null;
-
-function getDetailSections() {
-  return Array.from(document.querySelectorAll('.project-detail'));
+function escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
-function enterDetail(detailId, options = {}) {
-  const target = document.getElementById(detailId);
-  if (!target) return;
+function renderCategoryCards() {
+  if (!categoryCards || !Array.isArray(portfolioCategories)) return;
 
-  activeDetailId = detailId;
+  categoryCards.innerHTML = portfolioCategories.map((category) => `
+    <li aria-label="${escapeHtml(category.title)} 카테고리 카드">
+      <a class="project-card" href="#category-${escapeHtml(category.id)}" data-category-id="${escapeHtml(category.id)}" aria-label="${escapeHtml(category.title)} 보기">
+        <span class="project-card__mockup">
+          <img src="${escapeHtml(category.thumbnail)}" alt="${escapeHtml(category.title)} 썸네일" />
+        </span>
+        <span class="project-card__content">
+          <span class="project-card__meta">
+            <strong>${escapeHtml(category.title)}</strong>
+            <em>${escapeHtml(category.label)}</em>
+          </span>
+          <span class="project-card__desc">${escapeHtml(category.description)}</span>
+          <span class="project-card__cta">${escapeHtml(category.cta)} <span aria-hidden="true">→</span></span>
+        </span>
+      </a>
+    </li>
+  `).join('');
+}
+
+function getCategory(id) {
+  return portfolioCategories.find((item) => item.id === id) || portfolioCategories[0];
+}
+
+function getProjects(categoryId) {
+  return portfolioProjects[categoryId] || [];
+}
+
+function makeButtons(buttons = []) {
+  if (!buttons.length) return '';
+  return `<div class="work-actions">${buttons.map((button) => `
+    <a class="work-action" href="${escapeHtml(button.url || '#')}" target="${button.url && button.url !== '#' ? '_blank' : '_self'}" rel="noreferrer">
+      ${escapeHtml(button.text)}
+    </a>
+  `).join('')}</div>`;
+}
+
+function makeMeta(project) {
+  return `
+    <dl class="work-meta">
+      <div><dt>Category</dt><dd>${escapeHtml(project.subtitle || project.category || '')}</dd></div>
+      <div><dt>Tool</dt><dd>${escapeHtml(project.tool || '')}</dd></div>
+      <div><dt>Contribution</dt><dd>${escapeHtml(project.contribution || '')}</dd></div>
+    </dl>
+  `;
+}
+
+function openCategory(categoryId, projectId, options = {}) {
+  const category = getCategory(categoryId);
+  const projects = getProjects(category.id);
+  if (!category || !projects.length || !detailMount || !detailSection) return;
+
+  activeCategoryId = category.id;
+  activeProjectId = projectId || projects[0].id;
+
   document.body.classList.add('is-detail-view');
-
-  getDetailSections().forEach((section) => {
-    const isActive = section.id === detailId;
-    section.classList.toggle('is-active', isActive);
-  });
+  detailSection.classList.add('is-active');
+  renderDetail(category.id, activeProjectId);
 
   if (options.updateHash !== false) {
-    history.pushState({ detailId }, '', `#${detailId}`);
+    history.pushState({ categoryId: category.id, projectId: activeProjectId }, '', `#category-${category.id}`);
   }
 
   window.scrollTo({ top: 0, behavior: options.instant ? 'auto' : 'smooth' });
@@ -45,99 +91,158 @@ function enterDetail(detailId, options = {}) {
 }
 
 function exitDetail(targetId = 'projects', options = {}) {
-  activeDetailId = null;
+  activeCategoryId = null;
+  activeProjectId = null;
   document.body.classList.remove('is-detail-view');
-  getDetailSections().forEach((section) => section.classList.remove('is-active'));
-
-  const target = document.getElementById(targetId) || document.getElementById('page');
+  if (detailSection) detailSection.classList.remove('is-active');
 
   if (options.updateHash !== false) {
-    history.pushState({}, '', targetId === 'page' ? '#page' : `#${targetId}`);
+    history.pushState({}, '', `#${targetId}`);
   }
 
   window.setTimeout(() => {
-    if (targetId === 'page') {
-      window.scrollTo({ top: 0, behavior: options.instant ? 'auto' : 'smooth' });
-    } else {
-      smoothScrollTo(target);
-    }
+    const target = document.getElementById(targetId) || document.getElementById('page');
+    smoothScrollTo(target);
     updatePageState();
   }, 30);
 }
 
-function handleInitialRoute() {
-  const hash = window.location.hash.replace('#', '');
-  if (hash && document.getElementById(hash)?.classList.contains('project-detail')) {
-    enterDetail(hash, { instant: true, updateHash: false });
-  }
+function renderDetail(categoryId, projectId) {
+  const category = getCategory(categoryId);
+  const projects = getProjects(categoryId);
+  const selected = projects.find((item) => item.id === projectId) || projects[0];
+  activeProjectId = selected.id;
+
+  if (category.viewer === 'ux') renderUxViewer(category, projects, selected);
+  if (category.viewer === 'publishing') renderPublishingViewer(category, projects, selected);
+  if (category.viewer === 'design') renderDesignViewer(category, projects, selected);
 }
 
-function smoothScrollTo(target) {
-  if (!target) return;
-  const top = target.getBoundingClientRect().top + window.scrollY;
-  window.scrollTo({ top, behavior: 'smooth' });
+function renderUxViewer(category, projects, selected) {
+  detailMount.innerHTML = `
+    <article class="work-viewer work-viewer--ux" data-category="${escapeHtml(category.id)}">
+      <aside class="work-list" aria-label="UX/UI 프로젝트 목록">
+        <p class="work-list__eyebrow">${escapeHtml(category.title)}</p>
+        ${projects.map((project) => `
+          <button class="work-list__item ${project.id === selected.id ? 'is-active' : ''}" type="button" data-project-id="${escapeHtml(project.id)}">
+            <img src="${escapeHtml(project.thumbnail)}" alt="" />
+            <span><strong>${escapeHtml(project.title)}</strong><em>${escapeHtml(project.subtitle)}</em></span>
+          </button>
+        `).join('')}
+      </aside>
+      <div class="ux-panel">
+        <div class="ux-panel__top">
+          <p class="project-detail__eyebrow">PROJECT DETAIL</p>
+          <h2>${escapeHtml(selected.title)}</h2>
+          <p>${escapeHtml(selected.description)}</p>
+          ${makeMeta(selected)}
+          ${makeButtons(selected.buttons)}
+        </div>
+        <div class="process-viewer">
+          <img src="${escapeHtml(selected.processImage || selected.hero)}" alt="${escapeHtml(selected.title)} 프로세스 이미지" />
+        </div>
+      </div>
+    </article>
+  `;
+  bindProjectSwitch('uxui');
 }
 
-function updateHeroMessage() {
-  if (!hero || messages.length === 0) return;
+function renderPublishingViewer(category, projects, selected) {
+  detailMount.innerHTML = `
+    <article class="work-viewer work-viewer--publishing" data-category="${escapeHtml(category.id)}">
+      <div class="publishing-preview">
+        <img src="${escapeHtml(selected.hero)}" alt="${escapeHtml(selected.title)} 결과물 미리보기" />
+      </div>
+      <div class="publishing-info">
+        <p class="project-detail__eyebrow">${escapeHtml(category.title)}</p>
+        <h2>${escapeHtml(selected.title)}</h2>
+        <p>${escapeHtml(selected.description)}</p>
+        ${makeMeta(selected)}
+        ${makeButtons(selected.buttons)}
+      </div>
+    </article>
+  `;
+}
 
-  const heroTop = hero.offsetTop;
-  const scrollRange = hero.offsetHeight - window.innerHeight;
-  const scrolled = window.scrollY - heroTop;
-  const progress = Math.min(Math.max(scrolled / scrollRange, 0), 1);
-  const activeIndex = Math.min(messages.length - 1, Math.floor(progress * messages.length));
+function renderDesignViewer(category, projects, selected) {
+  detailMount.innerHTML = `
+    <article class="work-viewer work-viewer--design" data-category="${escapeHtml(category.id)}">
+      <div class="design-main">
+        <div class="design-main__image">
+          <img src="${escapeHtml(selected.hero)}" alt="${escapeHtml(selected.title)} 결과물 이미지" />
+        </div>
+        <div class="design-main__info">
+          <p class="project-detail__eyebrow">${escapeHtml(category.title)}</p>
+          <h2>${escapeHtml(selected.title)}</h2>
+          <p>${escapeHtml(selected.description)}</p>
+          ${makeMeta(selected)}
+          ${makeButtons(selected.buttons)}
+        </div>
+        ${selected.processImage ? `
+          <details class="design-process">
+            <summary>View Process</summary>
+            <img src="${escapeHtml(selected.processImage)}" alt="${escapeHtml(selected.title)} 디자인 프로세스 이미지" />
+          </details>
+        ` : ''}
+      </div>
+      <aside class="design-gallery" aria-label="Design Works 썸네일 갤러리">
+        ${projects.map((project) => `
+          <button class="design-thumb ${project.id === selected.id ? 'is-active' : ''}" type="button" data-project-id="${escapeHtml(project.id)}">
+            <img src="${escapeHtml(project.thumbnail)}" alt="${escapeHtml(project.title)} 썸네일" />
+            <span><strong>${escapeHtml(project.title)}</strong><em>${escapeHtml(project.subtitle)}</em></span>
+          </button>
+        `).join('')}
+      </aside>
+    </article>
+  `;
+  bindProjectSwitch('designworks');
+}
 
-  messages.forEach((message, index) => {
-    message.classList.toggle('is-active', index === activeIndex);
+function bindProjectSwitch(categoryId) {
+  detailMount.querySelectorAll('[data-project-id]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const projectId = button.dataset.projectId;
+      renderDetail(categoryId, projectId);
+    });
   });
 }
 
-let currentHeaderMode = 'hero';
-
-function setHeaderMode(mode) {
-  if (!header || !headerBrand || !headerCategory || currentHeaderMode === mode) return;
-
-  currentHeaderMode = mode;
-  header.classList.add('is-changing');
-
-  window.setTimeout(() => {
-    headerBrand.textContent = headerBrand.dataset[`${mode}Text`] || headerBrand.textContent;
-    headerCategory.textContent = headerCategory.dataset[`${mode}Text`] || headerCategory.textContent;
-    header.classList.remove('is-changing');
-  }, 220);
-}
-
-function updateHeaderText() {
-  if (!project) return;
-
-  const projectTop = project.getBoundingClientRect().top;
-  const detailVisible = document.body.classList.contains('is-detail-view');
-  const isProjectVisible = projectTop <= window.innerHeight * 0.35 || detailVisible;
-  setHeaderMode(isProjectVisible ? 'project' : 'hero');
-}
-
 function initProjectSlider() {
-  if (!window.gsap) return;
-
   const gallery = document.querySelector('.gallery');
-  const cards = gsap.utils.toArray('.cards li');
+  const cards = Array.from(document.querySelectorAll('.cards li'));
   const nextButton = document.querySelector('.next');
   const prevButton = document.querySelector('.prev');
-
   if (!gallery || !cards.length) return;
 
   let activeStep = 0;
   let isAnimating = false;
   const maxStep = cards.length - 1;
   const totalCards = cards.length;
+  const canUseGsap = Boolean(window.gsap && typeof window.gsap.to === 'function');
 
-  gsap.set(cards, {
-    opacity: 0,
-    scale: 0.68,
-    xPercent: 0,
-    zIndex: 0,
-    transformOrigin: '50% 50%'
-  });
+  function setCardState(card, values, immediate = false) {
+    const { xPercent, opacity, scale, zIndex } = values;
+
+    if (canUseGsap) {
+      gsap.to(card, {
+        xPercent,
+        opacity,
+        scale,
+        zIndex,
+        duration: immediate ? 0 : 0.65,
+        ease: 'expo.out',
+        overwrite: true
+      });
+      return;
+    }
+
+    card.style.transition = immediate
+      ? 'none'
+      : 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+    card.style.transform = `translateX(${xPercent}%) scale(${scale})`;
+    card.style.opacity = opacity;
+    card.style.zIndex = zIndex;
+  }
 
   function getLoopDistance(index, activeIndex) {
     let distance = index - activeIndex;
@@ -156,27 +261,16 @@ function initProjectSlider() {
 
       let opacity = 0;
       let scale = 0.58;
+      if (absDistance === 0) { opacity = 1; scale = 1; }
+      else if (absDistance === 1) { opacity = 0.56; scale = 0.76; }
+      else if (absDistance === 2) { opacity = 0.12; scale = 0.62; }
 
-      if (absDistance === 0) {
-        opacity = 1;
-        scale = 1;
-      } else if (absDistance === 1) {
-        opacity = 0.56;
-        scale = 0.76;
-      } else if (absDistance === 2) {
-        opacity = 0.12;
-        scale = 0.62;
-      }
-
-      gsap.to(card, {
+      setCardState(card, {
         xPercent: distance * 112,
         opacity,
         scale,
-        zIndex: Math.round(100 - absDistance * 10),
-        duration: immediate ? 0 : 0.65,
-        ease: 'expo.out',
-        overwrite: true
-      });
+        zIndex: Math.round(100 - absDistance * 10)
+      }, immediate);
     });
   }
 
@@ -184,122 +278,95 @@ function initProjectSlider() {
     let targetStep = step;
     if (targetStep > maxStep) targetStep = 0;
     if (targetStep < 0) targetStep = maxStep;
-    if (isAnimating && targetStep === activeStep) return;
+    if (isAnimating && targetStep !== activeStep) return;
 
     activeStep = targetStep;
     isAnimating = true;
     gallery.classList.add('is-sliding');
     renderSlider(activeStep);
-
     window.setTimeout(() => {
       isAnimating = false;
       gallery.classList.remove('is-sliding');
-    }, 520);
+    }, 650);
   }
-
-  function goNextSlide() { goToStep(activeStep + 1); }
-  function goPrevSlide() { goToStep(activeStep - 1); }
 
   renderSlider(activeStep, true);
 
   let wheelLock = false;
-
   gallery.addEventListener('wheel', (event) => {
     event.preventDefault();
     if (wheelLock) return;
-
     wheelLock = true;
     const isNext = event.deltaY > 0 || event.deltaX > 0;
-    isNext ? goNextSlide() : goPrevSlide();
-
-    window.setTimeout(() => {
-      wheelLock = false;
-    }, 650);
+    goToStep(activeStep + (isNext ? 1 : -1));
+    window.setTimeout(() => { wheelLock = false; }, 650);
   }, { passive: false });
 
-  gallery.addEventListener('mousedown', () => gallery.classList.add('is-sliding'));
-  window.addEventListener('mouseup', () => gallery.classList.remove('is-sliding'));
+  nextButton?.addEventListener('click', () => goToStep(activeStep + 1));
+  prevButton?.addEventListener('click', () => goToStep(activeStep - 1));
 
-  cards.forEach((card) => {
+  cards.forEach((card, index) => {
     const link = card.querySelector('.project-card');
     if (!link) return;
 
     link.addEventListener('click', (event) => {
       event.preventDefault();
       if (!card.classList.contains('is-active')) {
-        goToStep(cards.indexOf(card));
+        goToStep(index);
         return;
       }
-
-      const target = document.querySelector(link.getAttribute('href'));
-      gsap.to(card, {
-        scale: 1.08,
-        duration: 0.32,
-        ease: 'power3.out',
-        yoyo: true,
-        repeat: 1,
-        onComplete: () => {
-          if (target && target.classList.contains('project-detail')) {
-            enterDetail(target.id);
-          } else {
-            smoothScrollTo(target);
-          }
-        }
-      });
+      const categoryId = link.dataset.categoryId;
+      if (canUseGsap) {
+        gsap.to(card, {
+          scale: 1.08,
+          duration: 0.32,
+          ease: 'power3.out',
+          yoyo: true,
+          repeat: 1,
+          onComplete: () => openCategory(categoryId)
+        });
+      } else {
+        openCategory(categoryId);
+      }
     });
   });
-
-  if (nextButton) nextButton.addEventListener('click', goNextSlide);
-  if (prevButton) prevButton.addEventListener('click', goPrevSlide);
 }
 
-function initMoreProjects() {
-  const containers = document.querySelectorAll('.more-projects__list');
-  containers.forEach((container) => {
-    const currentSection = container.closest('.project-detail');
-    const currentId = currentSection ? currentSection.id : '';
+function smoothScrollTo(target) {
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
 
-    const html = projectData
-      .filter((item) => item.id !== currentId)
-      .slice(0, 4)
-      .map((item) => `
-        <a class="more-project-card" href="#${item.id}" aria-label="${item.title} 프로젝트 상세 보기">
-          <img src="${item.image}" alt="${item.title} 썸네일" />
-          <span>${item.title}<b aria-hidden="true">→</b></span>
-        </a>
-      `)
-      .join('');
-
-    container.innerHTML = html;
+function updateHeroMessage() {
+  if (!hero || messages.length === 0) return;
+  const heroTop = hero.offsetTop;
+  const scrollRange = hero.offsetHeight - window.innerHeight;
+  const scrolled = window.scrollY - heroTop;
+  const progress = Math.min(Math.max(scrolled / scrollRange, 0), 1);
+  const activeIndex = Math.min(messages.length - 1, Math.floor(progress * messages.length));
+  messages.forEach((message, index) => {
+    message.classList.toggle('is-active', index === activeIndex);
   });
+}
 
-  document.querySelectorAll('.more-project-card, .detail-home, .detail-back, .hero__home').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-      const target = document.querySelector(href);
-      if (!target) return;
+function setHeaderMode(mode) {
+  if (!header || !headerBrand || !headerCategory || currentHeaderMode === mode) return;
+  currentHeaderMode = mode;
+  header.classList.add('is-changing');
+  window.setTimeout(() => {
+    headerBrand.textContent = headerBrand.dataset[`${mode}Text`] || headerBrand.textContent;
+    headerCategory.textContent = headerCategory.dataset[`${mode}Text`] || headerCategory.textContent;
+    header.classList.remove('is-changing');
+  }, 220);
+}
 
-      event.preventDefault();
-
-      if (target.classList.contains('project-detail')) {
-        enterDetail(target.id);
-        return;
-      }
-
-      if (link.classList.contains('detail-back')) {
-        exitDetail('projects');
-        return;
-      }
-
-      if (link.classList.contains('detail-home') || link.classList.contains('hero__home')) {
-        exitDetail('page');
-        return;
-      }
-
-      smoothScrollTo(target);
-    });
-  });
+function updateHeaderText() {
+  if (!project) return;
+  const projectTop = project.getBoundingClientRect().top;
+  const detailVisible = document.body.classList.contains('is-detail-view');
+  const isProjectVisible = projectTop <= window.innerHeight * 0.35 || detailVisible;
+  setHeaderMode(isProjectVisible ? 'project' : 'hero');
 }
 
 function updatePageState() {
@@ -307,22 +374,46 @@ function updatePageState() {
   updateHeaderText();
 }
 
+function handleInitialRoute() {
+  const hash = window.location.hash.replace('#', '');
+  if (hash.startsWith('category-')) {
+    const categoryId = hash.replace('category-', '');
+    if (getCategory(categoryId)) openCategory(categoryId, null, { instant: true, updateHash: false });
+  }
+}
+
+function bindNavigation() {
+  document.addEventListener('click', (event) => {
+    const back = event.target.closest('.detail-back');
+    if (back) {
+      event.preventDefault();
+      exitDetail('projects');
+      return;
+    }
+
+    const home = event.target.closest('.hero__home');
+    if (home && document.body.classList.contains('is-detail-view')) {
+      event.preventDefault();
+      exitDetail('page');
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash.startsWith('category-')) {
+      openCategory(hash.replace('category-', ''), null, { instant: true, updateHash: false });
+    } else {
+      document.body.classList.remove('is-detail-view');
+      if (detailSection) detailSection.classList.remove('is-active');
+      updatePageState();
+    }
+  });
+}
+
+renderCategoryCards();
+initProjectSlider();
+bindNavigation();
+handleInitialRoute();
+updatePageState();
 window.addEventListener('scroll', updatePageState, { passive: true });
 window.addEventListener('resize', updatePageState);
-window.addEventListener('popstate', () => {
-  const hash = window.location.hash.replace('#', '');
-  if (hash && document.getElementById(hash)?.classList.contains('project-detail')) {
-    enterDetail(hash, { instant: true, updateHash: false });
-  } else {
-    exitDetail(hash || 'page', { instant: true, updateHash: false });
-  }
-});
-
-window.addEventListener('load', () => {
-  updatePageState();
-  initProjectSlider();
-  initMoreProjects();
-  handleInitialRoute();
-});
-
-updatePageState();

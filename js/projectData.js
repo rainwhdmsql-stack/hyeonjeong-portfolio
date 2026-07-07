@@ -127,8 +127,8 @@ const portfolioProjects = {
   ],
   publishing: [
     {
-      id: "bisang",
-      title: "BISANG",
+      id: "visang",
+      title: "VISANG",
       subtitle: "Clone Coding",
       category: "Web Publishing",
       tool: "VSCode",

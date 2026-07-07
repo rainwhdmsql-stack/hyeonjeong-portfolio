@@ -174,19 +174,19 @@ const portfolioProjects = {
       processImage: "asset/image/project-desc/ronron-desc.png",
       
     },
-    {
-      id: "canon",
-      title: "Canon",
-      subtitle: "Product Detail Design",
-      category: "Design Works",
-      tool: "Photoshop | Illustrator",
-      contribution: "100%",
-      description:
-        "제품 정보와 구매 설득 흐름을 시각적으로 정리한 상세페이지 디자인입니다.",
-      thumbnail: "asset/image/project-thumbnail/canon.png",
-      hero: "asset/image/project-thumbnail/canon.png",
-      processImage: "asset/image/project-thumbnail/canon.png",
-    },
+    // {
+    //   id: "canon",
+    //   title: "Canon",
+    //   subtitle: "Product Detail Design",
+    //   category: "Design Works",
+    //   tool: "Photoshop | Illustrator",
+    //   contribution: "100%",
+    //   description:
+    //     "제품 정보와 구매 설득 흐름을 시각적으로 정리한 상세페이지 디자인입니다.",
+    //   thumbnail: "asset/image/project-thumbnail/canon.png",
+    //   hero: "asset/image/project-thumbnail/canon.png",
+    //   processImage: "asset/image/project-thumbnail/canon.png",
+    // },
     {
       id: "arbor",
       title: "ARBOR",

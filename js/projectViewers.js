@@ -52,6 +52,35 @@ function makeMeta(project) {
   `;
 }
 
+function makeProjectBottomNav(categoryId, projects = [], selectedId) {
+  if (!Array.isArray(projects) || projects.length <= 1) return '';
+
+  return `
+    <nav class="project-bottom-nav" aria-label="다른 프로젝트로 이동">
+      <p class="project-bottom-nav__eyebrow">More Slides</p>
+      <div class="project-bottom-nav__list">
+        ${projects.map((project) => `
+          <button class="project-bottom-card ${project.id === selectedId ? 'is-active' : ''}" type="button" data-project-id="${escapeHtml(project.id)}" data-bottom-nav="${escapeHtml(categoryId)}">
+            <img src="${escapeHtml(project.thumbnail)}" alt="${escapeHtml(project.title)} 썸네일" />
+            <span><strong>${escapeHtml(project.title)}</strong><em>${escapeHtml(project.subtitle || project.category || '')}</em></span>
+          </button>
+        `).join('')}
+      </div>
+    </nav>
+  `;
+}
+
+function makeDesignProcess(project) {
+  if (!project.processImage) return '';
+
+  return `
+    <section class="design-process design-process--open" aria-label="${escapeHtml(project.title)} 디자인 프로세스">
+      <div class="design-process__header">View Process</div>
+      <img src="${escapeHtml(project.processImage)}" alt="${escapeHtml(project.title)} 디자인 프로세스 이미지" />
+    </section>
+  `;
+}
+
 // 카테고리 클릭 시 상세 뷰어로 진입합니다.
 function openCategory(categoryId, projectId, options = {}) {
   const category = getCategory(categoryId);
@@ -128,6 +157,7 @@ function renderUxViewer(category, projects, selected) {
           <img src="${escapeHtml(selected.processImage || selected.hero)}" alt="${escapeHtml(selected.title)} 프로세스 이미지" />
         </div>
       </div>
+      ${makeProjectBottomNav(category.id, projects, selected.id)}
     </article>
   `;
   bindProjectSwitch('uxui');
@@ -147,8 +177,10 @@ function renderPublishingViewer(category, projects, selected) {
         ${makeMeta(selected)}
         ${makeButtons(selected.buttons)}
       </div>
+      ${makeProjectBottomNav(category.id, projects, selected.id)}
     </article>
   `;
+  bindProjectSwitch('publishing');
 }
 
 // Design Works: 결과물 중심 뷰어와 우측 썸네일 갤러리를 렌더링합니다.
@@ -166,12 +198,7 @@ function renderDesignViewer(category, projects, selected) {
           ${makeMeta(selected)}
           ${makeButtons(selected.buttons)}
         </div>
-        ${selected.processImage ? `
-          <details class="design-process">
-            <summary>View Process</summary>
-            <img src="${escapeHtml(selected.processImage)}" alt="${escapeHtml(selected.title)} 디자인 프로세스 이미지" />
-          </details>
-        ` : ''}
+        ${makeDesignProcess(selected)}
       </div>
       <aside class="design-gallery" aria-label="Design Works 썸네일 갤러리">
         ${projects.map((project) => `
@@ -181,6 +208,7 @@ function renderDesignViewer(category, projects, selected) {
           </button>
         `).join('')}
       </aside>
+      ${makeProjectBottomNav(category.id, projects, selected.id)}
     </article>
   `;
   bindProjectSwitch('designworks');

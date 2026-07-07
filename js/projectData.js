@@ -94,7 +94,7 @@ const portfolioProjects = {
         "목적 기반 탐색 흐름으로 재구성한 팀 프로젝트형 홈페이지 리디자인입니다.",
       thumbnail: "asset/image/project-thumbnail/Adobe.png",
       hero: "asset/image/project-thumbnail/Adobe.png",
-      processImage: "asset/image/project-desc/Adobe-desc.png",
+      processImage: "asset/image/project-desc/adobe-desc.png",
       buttons: [
         { text: "Prototype", url: "#", type: "link" },
         {

@@ -77,3 +77,61 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   Responsive Background Ratio Fix
+   - 작은 화면에서 배경 blob이 가로로 과하게 튀거나 비율이 깨져 보이는 현상을 보정합니다.
+   ========================================================= */
+html,
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 1024px) {
+  .hero-project {
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .blob--left {
+    width: clamp(300px, 58vw, 560px);
+    top: -150px;
+    left: -150px;
+  }
+
+  .blob--right {
+    width: clamp(320px, 62vw, 600px);
+    right: -180px;
+    top: min(62vh, 520px);
+  }
+}
+
+@media (max-width: 640px) {
+  .section,
+  .hero__viewport,
+  .hero__inner {
+    min-height: 100svh;
+  }
+
+  .blob--left {
+    width: clamp(260px, 86vw, 420px);
+    top: -108px;
+    left: -132px;
+  }
+
+  .blob--right {
+    width: clamp(280px, 92vw, 460px);
+    right: -168px;
+    top: 56vh;
+  }
+
+  .letter-card__info {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+  }
+}

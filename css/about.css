@@ -540,3 +540,30 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+/* =========================================================
+   Contact Detail Additions
+   - 연락처 텍스트와 GitHub/Notion 버튼 아이콘을 추가합니다.
+   ========================================================= */
+.letter-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 20px;
+  color: rgba(23, 36, 95, 0.66);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.letter-card__links a img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  margin-right: 8px;
+  flex: 0 0 auto;
+}
+
+.letter-card__links a span {
+  line-height: 1;
+}

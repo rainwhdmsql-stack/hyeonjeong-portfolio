@@ -78,71 +78,8 @@
   }
 }
 
-/* =========================================================
-   Responsive Background Ratio Fix
-   - sticky가 깨지지 않도록 hero-project에는 overflow hidden을 주지 않습니다.
-   ========================================================= */
-
-html,
-body {
-  overflow-x: hidden;
-}
-
-@media (max-width: 1024px) {
-  .hero-project {
-    overflow: visible;
-  }
-
-  .hero__bg {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .blob--left {
-    width: clamp(300px, 58vw, 560px);
-    top: -150px;
-    left: -150px;
-  }
-
-  .blob--right {
-    width: clamp(320px, 62vw, 600px);
-    right: -180px;
-    top: min(62vh, 520px);
-  }
-}
-
+/* Latest contact info layout retained */
 @media (max-width: 640px) {
-  .section,
-  .hero__viewport,
-  .hero__inner {
-    min-height: 100svh;
-  }
-
-  .hero__viewport {
-    height: 100svh;
-  }
-
-  .blob--left {
-    width: clamp(260px, 86vw, 420px);
-    top: -108px;
-    left: -132px;
-  }
-
-  .blob--right {
-    width: clamp(280px, 92vw, 460px);
-    right: -168px;
-    top: 56vh;
-  }
-
-  .project {
-    min-height: 140vh;
-  }
-
-  .project__inner {
-    position: sticky;
-    top: 0;
-  }
-
   .letter-card__info {
     flex-direction: column;
     gap: 4px;

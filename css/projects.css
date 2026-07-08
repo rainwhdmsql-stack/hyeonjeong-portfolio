@@ -10,14 +10,13 @@
    ========================================================= */
 .project {
   position: relative;
-  min-height: 128vh;
+  min-height: 100vh;
   background: transparent;
   overflow: visible;
 }
 
 .project__inner {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 1;
   min-height: 100vh;
   display: flex;
@@ -107,23 +106,12 @@
   border: 1px solid rgba(255, 255, 255, 0.44);
   border-radius: inherit;
   background:
-    radial-gradient(
-      circle at 24% 18%,
-      rgba(255, 255, 255, 0.22),
-      transparent 34%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.16),
-      rgba(255, 255, 255, 0.06)
-    );
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.22), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
   box-shadow: 0 26px 80px rgba(35, 58, 154, 0.24);
   backdrop-filter: blur(14px);
   transform: translateZ(0);
-  transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    background 0.35s ease;
+  transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
 }
 
 .project-card::before {
@@ -142,12 +130,7 @@
   position: absolute;
   inset: 1px;
   border-radius: 29px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.18),
-    transparent 48%,
-    rgba(255, 255, 255, 0.08)
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 48%, rgba(255, 255, 255, 0.08));
   pointer-events: none;
 }
 
@@ -186,20 +169,10 @@
   border: 1px solid rgba(255, 255, 255, 0.36);
   border-radius: 24px;
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.28),
-      rgba(255, 255, 255, 0.05)
-    ),
-    radial-gradient(
-      circle at 30% 28%,
-      rgba(255, 255, 255, 0.42),
-      transparent 28%
-    ),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.05)),
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.42), transparent 28%),
     rgba(255, 255, 255, 0.1);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 18px 50px rgba(25, 45, 118, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 18px 50px rgba(25, 45, 118, 0.28);
 }
 
 .project-card__device::before,
@@ -212,23 +185,15 @@
   background: rgba(255, 255, 255, 0.32);
 }
 
-.project-card__device::before {
-  top: 34%;
-}
-.project-card__device::after {
-  top: 56%;
-}
+.project-card__device::before { top: 34%; }
+.project-card__device::after { top: 56%; }
 
 .project-card__glow {
   position: absolute;
   width: 72%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.24),
-    transparent 62%
-  );
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.24), transparent 62%);
   filter: blur(24px);
   opacity: 0.62;
   pointer-events: none;
@@ -287,9 +252,7 @@
   color: rgba(255, 255, 255, 0.96);
   opacity: 0;
   transform: translateY(8px);
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .cards li.is-active .project-card:hover .project-card__cta {
@@ -327,10 +290,7 @@
   font-weight: 400;
   line-height: 1;
   cursor: pointer;
-  transition:
-    transform 0.28s ease,
-    background 0.28s ease,
-    border-color 0.28s ease;
+  transition: transform 0.28s ease, background 0.28s ease, border-color 0.28s ease;
 }
 
 .actions button:hover {
@@ -340,43 +300,22 @@
 }
 
 @keyframes blobFloatLeft {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-  }
-  33% {
-    transform: translate3d(34px, 18px, 0) rotate(0.8deg) scale(1.006);
-  }
-  66% {
-    transform: translate3d(14px, 42px, 0) rotate(-0.7deg) scale(1.01);
-  }
-  100% {
-    transform: translate3d(46px, 30px, 0) rotate(0.4deg) scale(1.004);
-  }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate3d(34px, 18px, 0) rotate(0.8deg) scale(1.006); }
+  66% { transform: translate3d(14px, 42px, 0) rotate(-0.7deg) scale(1.01); }
+  100% { transform: translate3d(46px, 30px, 0) rotate(0.4deg) scale(1.004); }
 }
 
 @keyframes blobFloatRight {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-  }
-  33% {
-    transform: translate3d(-32px, -16px, 0) rotate(-0.7deg) scale(1.006);
-  }
-  66% {
-    transform: translate3d(-18px, -46px, 0) rotate(0.8deg) scale(1.01);
-  }
-  100% {
-    transform: translate3d(-48px, -28px, 0) rotate(-0.4deg) scale(1.004);
-  }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate3d(-32px, -16px, 0) rotate(-0.7deg) scale(1.006); }
+  66% { transform: translate3d(-18px, -46px, 0) rotate(0.8deg) scale(1.01); }
+  100% { transform: translate3d(-48px, -28px, 0) rotate(-0.4deg) scale(1.004); }
 }
 
 @keyframes scrollIconFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -408,10 +347,7 @@
   border-radius: 999px;
   transform: translate(-50%, -50%);
   text-decoration: none;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease,
-    background 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
   opacity: 0.9;
 }
 
@@ -449,9 +385,7 @@
   height: 100%;
   object-fit: cover;
   transform: scale(1.01);
-  transition:
-    transform 0.45s ease,
-    filter 0.45s ease;
+  transition: transform 0.45s ease, filter 0.45s ease;
 }
 
 .cards li.is-active .project-card:hover .project-card__mockup img {
@@ -469,11 +403,7 @@
   flex: 0 0 auto;
   padding: 24px 28px 28px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-  background: linear-gradient(
-    180deg,
-    rgba(18, 34, 102, 0.5),
-    rgba(10, 18, 60, 0.24)
-  );
+  background: linear-gradient(180deg, rgba(18, 34, 102, 0.5), rgba(10, 18, 60, 0.24));
 }
 
 .project-card__meta strong {
@@ -494,3 +424,5 @@
   opacity: 1;
   transform: translateX(6px);
 }
+
+

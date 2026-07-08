@@ -80,7 +80,11 @@
   <body>
     <main id="page">
       <!-- Header: 현재 섹션 정보를 보여주는 고정 상단 텍스트 -->
-      <header class="hero__header" data-mode="hero" aria-label="포트폴리오 상단 정보">
+      <header
+        class="hero__header"
+        data-mode="hero"
+        aria-label="포트폴리오 상단 정보"
+      >
         <p
           class="hero__brand"
           data-hero-text="Hyeon Jeong | PORTFOLIO"
@@ -194,7 +198,11 @@
         </div>
       </section>
       <!-- About Section: Piece by Piece 슬라이딩 퍼즐 인터랙션 -->
-      <section class="section section--about" id="about" aria-label="About Piece by Piece">
+      <section
+        class="section section--about"
+        id="about"
+        aria-label="About Piece by Piece"
+      >
         <div class="inner about__inner">
           <div class="about__intro">
             <!-- <p class="section__eyebrow about__eyebrow">ABOUT</p> -->
@@ -208,9 +216,17 @@
           </div>
 
           <!-- About Playground: 퍼즐 조각과 드래그 가능한 Tool Sticker 영역 -->
-          <div class="about-playground" id="aboutPlayground" aria-label="작업 방식 퍼즐과 툴 스티커">
+          <div
+            class="about-playground"
+            id="aboutPlayground"
+            aria-label="작업 방식 퍼즐과 툴 스티커"
+          >
             <!-- Sliding Puzzle: 오브젝트 클릭 시 빈칸으로 이동하고 설명 조각 표시 -->
-            <div class="puzzle-board" id="puzzleBoard" aria-label="작업 방식 슬라이딩 퍼즐">
+            <div
+              class="puzzle-board"
+              id="puzzleBoard"
+              aria-label="작업 방식 슬라이딩 퍼즐"
+            >
               <div class="puzzle-cell" aria-hidden="true"></div>
               <div class="puzzle-cell" aria-hidden="true"></div>
               <div class="puzzle-cell" aria-hidden="true"></div>
@@ -221,57 +237,185 @@
               <div class="puzzle-cell" aria-hidden="true"></div>
               <div class="puzzle-cell" aria-hidden="true"></div>
 
-              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="why" aria-label="Why 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Why_.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--yellow"
+                type="button"
+                data-piece-id="why"
+                aria-label="Why 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Why_.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Why?</span>
               </button>
-              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="simplify" aria-label="Simplify 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Simplify.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--pink"
+                type="button"
+                data-piece-id="simplify"
+                aria-label="Simplify 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Simplify.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Simplify</span>
               </button>
-              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="perspective" aria-label="Perspective 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Perspective.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--yellow"
+                type="button"
+                data-piece-id="perspective"
+                aria-label="Perspective 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Perspective.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Perspective</span>
               </button>
-              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="handsOn" aria-label="Hands-on 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Hands-on.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--pink"
+                type="button"
+                data-piece-id="handsOn"
+                aria-label="Hands-on 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Hands-on.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Hands-on</span>
               </button>
-              <button class="puzzle-piece puzzle-piece--yellow" type="button" data-piece-id="refine" aria-label="Refine 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Refine.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--yellow"
+                type="button"
+                data-piece-id="refine"
+                aria-label="Refine 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Refine.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Refine</span>
               </button>
-              <button class="puzzle-piece puzzle-piece--pink" type="button" data-piece-id="details" aria-label="Details 설명 열기">
-                <img class="puzzle-piece__icon" src="asset/puzzle-icon/Details.png" alt="" aria-hidden="true" />
+              <button
+                class="puzzle-piece puzzle-piece--pink"
+                type="button"
+                data-piece-id="details"
+                aria-label="Details 설명 열기"
+              >
+                <img
+                  class="puzzle-piece__icon"
+                  src="asset/puzzle-icon/Details.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span class="puzzle-piece__label">Details</span>
               </button>
 
-              <article class="puzzle-description" id="puzzleDescription" aria-live="polite" hidden>
+              <article
+                class="puzzle-description"
+                id="puzzleDescription"
+                aria-live="polite"
+                hidden
+              >
                 <p class="puzzle-description__title"></p>
                 <p class="puzzle-description__text"></p>
               </article>
             </div>
 
             <!-- Tool Sticker Layer: asset/tool-sticker 이미지 기반 드래그 스티커 -->
-            <div class="tool-sticker-layer" id="toolStickerLayer" aria-label="드래그 가능한 툴 스티커">
-              <img class="tool-sticker" src="asset/tool-sticker/figma.png" alt="Figma" data-tool="Figma" />
-              <img class="tool-sticker" src="asset/tool-sticker/photoshop.png" alt="Photoshop" data-tool="Photoshop" />
-              <img class="tool-sticker" src="asset/tool-sticker/illustrator.png" alt="Illustrator" data-tool="Illustrator" />
-              <img class="tool-sticker" src="asset/tool-sticker/github.png" alt="github" data-tool="github" />
-              <img class="tool-sticker" src="asset/tool-sticker/notion.png" alt="notion" data-tool="notion" />
-              <img class="tool-sticker" src="asset/tool-sticker/slack.png" alt="slack" data-tool="slack" />
-              <img class="tool-sticker" src="asset/tool-sticker/vscode.png" alt="VSCode" data-tool="VSCode" />
-              <img class="tool-sticker" src="asset/tool-sticker/midjourney.png" alt="midjourney" data-tool="midjourney" />
-              <img class="tool-sticker" src="asset/tool-sticker/google-analytics.png" alt="Google Analytics" data-tool="GoogleAnalytics" />
-              <img class="tool-sticker" src="asset/tool-sticker/meta.png" alt="Meta" data-tool="Meta" />
-              <img class="tool-sticker" src="asset/tool-sticker/looker-studio.png" alt="Looker-studio" data-tool="Looker-studio" />
+            <div
+              class="tool-sticker-layer"
+              id="toolStickerLayer"
+              aria-label="드래그 가능한 툴 스티커"
+            >
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/figma.png"
+                alt="Figma"
+                data-tool="Figma"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/photoshop.png"
+                alt="Photoshop"
+                data-tool="Photoshop"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/illustrator.png"
+                alt="Illustrator"
+                data-tool="Illustrator"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/github.png"
+                alt="github"
+                data-tool="github"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/notion.png"
+                alt="notion"
+                data-tool="notion"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/slack.png"
+                alt="slack"
+                data-tool="slack"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/vscode.png"
+                alt="VSCode"
+                data-tool="VSCode"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/midjourney.png"
+                alt="midjourney"
+                data-tool="midjourney"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/google-analytics.png"
+                alt="Google Analytics"
+                data-tool="GoogleAnalytics"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/meta.png"
+                alt="Meta"
+                data-tool="Meta"
+              />
+              <img
+                class="tool-sticker"
+                src="asset/tool-sticker/looker-studio.png"
+                alt="Looker-studio"
+                data-tool="Looker-studio"
+              />
             </div>
           </div>
         </div>
       </section>
 
       <!-- Contact Section: Letter 형태의 마지막 연락 영역 -->
-      <section class="section section--contact" id="contact" aria-label="Contact Letter">
+      <section
+        class="section section--contact"
+        id="contact"
+        aria-label="Contact Letter"
+      >
         <div class="inner contact__inner">
           <article class="letter-card" aria-label="contact-letter">
             <p class="letter-card__eyebrow">LETTER</p>
@@ -285,12 +429,28 @@
               <span><strong>Email. </strong> rainjo98@naver.com</span>
             </div>
             <div class="letter-card__links" aria-label="연락 링크">
-              <a href="https://github.com/rainwhdmsql-stack" target="_blank" rel="noreferrer">
-                <img src="asset/letter-icon/github.png" alt="" aria-hidden="true" />
+              <a
+                href="https://github.com/rainwhdmsql-stack"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="asset/letter-icon/github.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span>GitHub</span>
               </a>
-              <a href="https://app.notion.com/p/2be5a50dfca18067968eec735f61d057?source=copy_link" target="_blank" rel="noreferrer">
-                <img src="asset/letter-icon/notion.png" alt="" aria-hidden="true" />
+              <a
+                href="https://app.notion.com/p/2be5a50dfca18067968eec735f61d057?source=copy_link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="asset/letter-icon/notion.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span>Notion</span>
               </a>
             </div>

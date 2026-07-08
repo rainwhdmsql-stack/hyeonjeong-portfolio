@@ -4,24 +4,6 @@ function smoothScrollTo(target) {
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
-function updateHeroPin() {
-  if (!hero) return;
-
-  const heroTop = hero.offsetTop;
-  const heroEnd = heroTop + hero.offsetHeight - window.innerHeight;
-  const scrollY = window.scrollY;
-
-  hero.classList.remove('is-pinned', 'is-ended');
-
-  if (scrollY >= heroTop && scrollY < heroEnd) {
-    hero.classList.add('is-pinned');
-  }
-
-  if (scrollY >= heroEnd) {
-    hero.classList.add('is-ended');
-  }
-}
-
 function updateHeroMessage() {
   if (!hero || messages.length === 0) return;
 
@@ -87,7 +69,6 @@ function updateHeaderText() {
 }
 
 function updatePageState() {
-  updateHeroPin();
   updateHeroMessage();
   updateHeaderText();
 }

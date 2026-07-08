@@ -1,18 +1,8 @@
-/* =========================================================
-   hero.css
-   - mainpage.css에서 분리한 섹션별 스타일 파일입니다.
-   - 원본 라인 범위: 1-165
-   ========================================================= */
-
-/* =========================================================
-   Hero + Projects Wrapper
-   - 인트로와 프로젝트 슬라이더를 하나의 스크롤 흐름으로 연결
-   ========================================================= */
 .hero-project {
   position: relative;
   background: var(--color-main-bg);
   overflow: visible;
-  min-height: calc(var(--hero-scroll-height) + 100vh);
+  min-height: auto;
 }
 
 .hero {
@@ -23,17 +13,35 @@
 }
 
 .hero__viewport {
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
   height: var(--hero-viewport-height);
   overflow: visible;
+  z-index: 1;
+}
+
+.hero.is-pinned .hero__viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.hero.is-ended .hero__viewport {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .hero__bg {
   position: absolute;
-  top:0;
-  left:0;
-  right:0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: calc(var(--hero-scroll-height) + 100vh);
   z-index: 0;
   pointer-events: none;
@@ -167,5 +175,3 @@
   height: auto;
   animation: scrollIconFloat 2.6s ease-in-out infinite;
 }
-
-

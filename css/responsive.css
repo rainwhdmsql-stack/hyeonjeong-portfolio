@@ -80,8 +80,9 @@
 
 /* =========================================================
    Responsive Background Ratio Fix
-   - 작은 화면에서 배경 blob이 가로로 과하게 튀거나 비율이 깨져 보이는 현상을 보정합니다.
+   - sticky가 깨지지 않도록 hero-project에는 overflow hidden을 주지 않습니다.
    ========================================================= */
+
 html,
 body {
   overflow-x: hidden;
@@ -89,7 +90,7 @@ body {
 
 @media (max-width: 1024px) {
   .hero-project {
-    overflow: hidden;
+    overflow: visible;
   }
 
   .hero__bg {
@@ -117,6 +118,10 @@ body {
     min-height: 100svh;
   }
 
+  .hero__viewport {
+    height: 100svh;
+  }
+
   .blob--left {
     width: clamp(260px, 86vw, 420px);
     top: -108px;
@@ -127,6 +132,15 @@ body {
     width: clamp(280px, 92vw, 460px);
     right: -168px;
     top: 56vh;
+  }
+
+  .project {
+    min-height: 140vh;
+  }
+
+  .project__inner {
+    position: sticky;
+    top: 0;
   }
 
   .letter-card__info {

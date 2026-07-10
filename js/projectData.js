@@ -20,7 +20,7 @@ const portfolioCategories = [
     label: "PUBLISHING",
     description:
       "HTML, CSS, JavaScript 기반으로 구현한 웹 퍼블리싱 작업입니다.",
-    thumbnail: "asset/image/project-thumbnail/bisang.png",
+    thumbnail: "asset/image/project-thumbnail/visang.png",
     cta: "View Result",
     viewer: "publishing",
   },

@@ -135,8 +135,8 @@ const portfolioProjects = {
       contribution: "100%",
       description:
         "웹 구조와 반응형 레이아웃 구현을 학습한 클론 코딩 프로젝트입니다.",
-      thumbnail: "asset/image/project-thumbnail/bisang.png",
-      hero: "asset/image/project-thumbnail/bisang.png",
+      thumbnail: "asset/image/project-thumbnail/visang.png",
+      hero: "asset/image/project-thumbnail/visang.png",
       buttons: [
         {
           text: "Website Preview",
@@ -172,7 +172,6 @@ const portfolioProjects = {
       thumbnail: "asset/image/project-thumbnail/ronron.png",
       hero: "asset/image/project-thumbnail/ronron.png",
       processImage: "asset/image/project-desc/ronron-desc.png",
-      
     },
     // {
     //   id: "canon",
